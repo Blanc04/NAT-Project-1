@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    
+</head>
+<body>
+  <header class="site-header">
+  <!-- 왼쪽: 로고 -->
+  <a href="/main" class="site-logo">
+    <img
+      src="/static/images/KakaoTalk_20260902_172536230.png"
+      alt="Dish Inside 로고"
+    >
+  </a>
+
+  <!-- 가운데: 검색창 -->
+  <form class="search-form" method="get" action="/search">
+    <input
+      type="search"
+      id="search-word"
+      name="keyword"
+      aria-label="맛집 검색"
+      placeholder="식당 이름이나 지역을 검색하세요"
+    >
+
+    <button type="submit">검색</button>
+  </form>
+
+  <!-- 오른쪽: 회원 영역 -->
+  <div class="member-area">
+    <a href="/mypage">프로필</a>
+    <a href="/login">로그인</a>
+  </div>
+</header>
+
+    
+</body>
+</html>

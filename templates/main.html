@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dish Inside</title>
+  
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+
+  </style>
+</head>
+
+<body>
+  <!-- 상단 영역, 로고 띄우기 성공 -->
+  {% include 'header.html' %}
+
+  <!-- 본문 전체 영역 -->
+  <main class="restaurant-page">
+  <div class="restaurant-layout">
+    <!-- 왼쪽 메인 영역 -->
+    <div class="restaurant-main">
+      <!-- 식당 대표 정보 -->
+      <article class="restaurant-summary">
+        <div class="restaurant-photo">
+          <img
+            src="/static/images/restaurant.jpg"
+            alt="식당 대표 이미지"
+          >
+        </div>
+
+        <div class="restaurant-content">
+          <div class="restaurant-heading">
+            <div>
+              <span class="open-badge">영업 중</span>
+              <h1>둘이 먹다 둘이 죽어도 모르는 집</h1>
+            </div>
+
+            <div class="restaurant-rating">
+              <span>★</span>
+              <strong>4.8</strong>
+            </div>
+          </div>
+
+          <div class="restaurant-actions">
+            <a href="/review/list" class="primary-action">
+              리뷰 조회
+            </a>
+
+            <a href="/restaurant/update">
+              정보 수정
+            </a>
+
+            <a href="tel:010-6666-6666">
+              전화
+            </a>
+
+            <button type="button">
+              북마크
+            </button>
+          </div>
+
+          <div class="restaurant-info-grid">
+            <div class="info-item info-address">
+              <span class="info-label">주소</span>
+
+              <div class="info-value">
+                <span>충청남도 천안시 OOO OOO</span>
+                <a href="https://map.kakao.com/">지도 보기</a>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">영업시간</span>
+              <strong class="info-value">00:00 ~ 24:00</strong>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">전화번호</span>
+              <a href="tel:010-6666-6666" class="info-value">
+                010-6666-6666
+              </a>
+            </div>
+
+            <div class="info-item">
+              <span class="info-label">휴무일</span>
+              <strong class="info-value holiday-text">없음</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 메뉴 영역 -->
+      <section class="menu-card">
+        <div class="section-heading">
+          <div>
+            <h2>메뉴</h2>
+            <p>대표 메뉴와 가격을 확인해 보세요.</p>
+          </div>
+        </div>
+
+        <ul class="menu-list">
+          <li>
+            <span class="menu-name">
+              둘이 먹으면 하나 죽는 집
+            </span>
+
+            <strong class="menu-price">
+              25,000원
+            </strong>
+          </li>
+
+          <li>
+            <span class="menu-name">
+              혼자 먹으면 죽는 스파게티
+            </span>
+
+            <strong class="menu-price">
+              12,500원
+            </strong>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- 오른쪽 보조 영역 -->
+    <aside class="side-area">
+      <section class="map-card">
+        <div class="section-heading">
+          <div>
+            <h2>위치</h2>
+            <p>식당 위치를 지도에서 확인하세요.</p>
+          </div>
+        </div>
+
+        <div id="map">
+          지도 API가 들어갈 영역
+        </div>
+      </section>
+
+      <section class="advertisement-card">
+        <a href="#">
+          <img
+            src="/static/images/ChatGPT Image 2026년 9월 4일 오후 12_28_03.png"
+            alt="광고 이미지"
+          >
+        </a>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <small>Provided by Team. NAT</small>
+</footer>
+</body>
+</html>

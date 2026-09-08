@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .mypage-content {
+  display: flex;
+  flex-direction: column;
+  width: min(1180px, calc(100% - 40px));
+  min-height: calc(100vh - 90px);
+  margin: 0 auto;
+  padding: 10px 0 8px;
+  font-family: "Malgun Gothic", sans-serif;
+  color: #222;
+  box-sizing: border-box;
+}
+
+/* 큰 프로필 영역 */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding-bottom: 12px;
+}
+
+.user-avatar {
+  position: relative;
+  flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #d8d8d8;
+}
+
+.avatar-head {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #111;
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.avatar-shoulders {
+  position: absolute;
+  bottom: 17px;
+  left: 50%;
+  width: 25px;
+  height: 14px;
+  border: 2px solid #111;
+  border-bottom: 0;
+  border-radius: 15px 15px 0 0;
+  transform: translateX(-50%);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 13px;
+}
+
+.user-id {
+  display: block;
+  width: 156px;
+  min-height: 16px;
+  padding: 1px 5px;
+  background-color: #fff3a8;
+  color: #333;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.edit-profile-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85px;
+  height: 27px;
+  border: 1px solid #9db8ec;
+  background-color: #fff;
+  color: #557fc8;
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.edit-profile-button:hover {
+  border-color: #6831df;
+  color: #6831df;
+  background-color: #f8f5ff;
+}
+
+/* 마이페이지 메뉴 */
+.mypage-menu {
+  width: 100%;
+  max-width: 760px;
+  padding-left: 26px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+  border-bottom: 1px solid #ededed;
+  color: #222;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.menu-star {
+  color: #111;
+  font-size: 8px;
+}
+
+.menu-item:hover {
+  padding-left: 8px;
+  color: #6831df;
+  background-color: #faf8ff;
+}
+
+/* 광고 영역 */
+.advertisement {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 150px;
+  margin-top: auto;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  color: #222;
+  font-size: clamp(36px, 6vw, 60px);
+  white-space: nowrap;
+}
+
+/* 하단 문구 */
+.mypage-footer {
+  padding-top: 35px;
+  color: #777;
+  font-size: 7px;
+  text-align: center;
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+  .mypage-content {
+    width: calc(100% - 24px);
+    min-height: calc(100vh - 90px);
+  }
+
+  .mypage-menu {
+    padding-left: 26px;
+  }
+
+  .menu-item {
+    min-height: 29px;
+    font-size: 11px;
+  }
+
+  .advertisement {
+    min-height: 105px;
+    font-size: 43px;
+  }
+}
+    </style>
+</head>
+<body>
+
+    <main class="mypage-content">
+  <section class="user-profile">
+    <div class="user-avatar" aria-hidden="true">
+      <span class="avatar-head"></span>
+      <span class="avatar-shoulders"></span>
+    </div>
+
+    <div class="user-info">
+      <strong class="user-id">
+        {#{ user.login_id }#}
+      </strong>
+
+      <a href="/mypage/edit" class="edit-profile-button">
+        회원 정보 수정
+      </a>
+    </div>
+  </section>
+
+  <nav class="mypage-menu">
+    <a href="/mypage/bookmarks" class="menu-item">
+      <span class="menu-star">★</span>
+      북마크 리스트 조회
+    </a>
+
+    <a href="/mypage/posts" class="menu-item">
+      <span class="menu-star">★</span>
+      작성글 조회
+    </a>
+
+    <a href="/mypage/reviews" class="menu-item">
+      <span class="menu-star">★</span>
+      리뷰 조회
+    </a>
+  </nav>
+
+  <aside class="advertisement">
+    광고 페이지
+  </aside>
+
+  <footer class="mypage-footer">
+    Provided To Team_R4U
+  </footer>
+</main>
+    
+    
+    
+</body>
+</html>

@@ -1,0 +1,225 @@
+/* ========================================
+   Dish Inside 회원가입
+======================================== */
+
+.signup-box,
+.signup-box * {
+  box-sizing: border-box;
+}
+
+.signup-box {
+  --brand: #ff5b3f;
+  --brand-dark: #e7472e;
+  --brand-light: #fff2ee;
+  --text: #202124;
+  --sub-text: #777;
+  --line: #e4e4e4;
+
+  width: min(620px, calc(100% - 32px));
+  margin: 50px auto 70px;
+  padding: 42px 40px;
+
+  border: 1px solid #f0e2de;
+  border-radius: 20px;
+  background-color: #fff;
+
+  box-shadow:
+    0 18px 45px rgba(75, 37, 27, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+
+  font-family:
+    "Pretendard",
+    "Noto Sans KR",
+    "Malgun Gothic",
+    sans-serif;
+}
+
+/* 폼 전체 */
+.signup-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+/* 한 줄: 제목 + 입력창 + 확인 버튼 */
+.signup-box .form-group {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr) 90px;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+}
+
+/* 왼쪽 제목 */
+.signup-box .form-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #333;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* 필수 입력 표시 */
+.signup-box .required {
+  color: var(--brand);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+/* 입력창 영역 */
+.signup-box .input-area {
+  width: 100%;
+  min-width: 0;
+}
+
+.signup-box .input-area input {
+  display: block;
+  width: 100%;
+  height: 50px;
+  padding: 0 15px;
+
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  outline: none;
+  background-color: #fafafa;
+
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.signup-box .input-area input::placeholder {
+  color: #aaa;
+}
+
+.signup-box .input-area input:hover {
+  border-color: #cccccc;
+  background-color: #fff;
+}
+
+.signup-box .input-area input:focus {
+  border-color: var(--brand);
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(255, 91, 63, 0.1);
+}
+
+/* 중복 확인, 인증 요청 버튼 */
+.signup-box .check-button {
+  width: 90px;
+  height: 44px;
+  padding: 0;
+
+  border: 1px solid #ffc8bc;
+  border-radius: 10px;
+  background-color: var(--brand-light);
+  color: var(--brand-dark);
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.signup-box .check-button:hover {
+  border-color: var(--brand);
+  background-color: #ffe4dd;
+  transform: translateY(-1px);
+}
+
+.signup-box .check-button:active {
+  transform: translateY(0);
+}
+
+/* 회원가입 완료 버튼 */
+.signup-box .signup-button {
+  width: calc(100% - 112px);
+  height: 52px;
+  margin: 9px 0 0 112px;
+
+  border: none;
+  border-radius: 12px;
+  background-color: var(--brand);
+  color: #fff;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.signup-box .signup-button:hover {
+  background-color: var(--brand-dark);
+  box-shadow: 0 8px 18px rgba(255, 91, 63, 0.24);
+  transform: translateY(-1px);
+}
+
+.signup-box .signup-button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+/* 입력값이 형식에 맞지 않을 때 */
+.signup-box .input-area input:not(:placeholder-shown):invalid {
+  border-color: #ef6b57;
+  background-color: #fffafa;
+}
+
+/* ========================================
+   모바일
+======================================== */
+
+@media (max-width: 650px) {
+  .signup-box {
+    margin: 30px auto 50px;
+    padding: 32px 23px;
+    border-radius: 17px;
+  }
+
+  .signup-box form {
+    gap: 22px;
+  }
+
+  .signup-box .form-group {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .signup-box .form-group label {
+    font-size: 13px;
+  }
+
+  .signup-box .input-area input {
+    height: 48px;
+  }
+
+  .signup-box .check-button {
+    width: 100%;
+    height: 42px;
+  }
+
+  .signup-box .signup-button {
+    width: 100%;
+    height: 50px;
+    margin: 5px 0 0;
+  }
+}
