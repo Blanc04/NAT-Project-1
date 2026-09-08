@@ -1,13 +1,13 @@
 from sqlmodel import SQLModel, Field
 from typing import Optional
 
-class Resta(SQLModel, table=True):
+class Restaurant(SQLModel, table=True):
 	res_code : int | None = Field(
 		default = None,
 		primary_key = True
 	)
-	user_code : int = Field(
-        foreign_key='User.user_code'
+	member_code : int = Field(
+        foreign_key='Member.member_code'
     )
 	category : str
 	res_name : str

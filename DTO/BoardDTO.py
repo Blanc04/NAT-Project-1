@@ -5,8 +5,8 @@ class Board(SQLModel, table=True):
         default = None,
         primary_key = True
     )
-    user_code : int = Field(
-            foreign_key='User.user_code'
+    member_code : int = Field(
+            foreign_key='Member.member_code'
         )
     board_cate : str
     board_title : str
