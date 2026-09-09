@@ -1,12 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>리뷰 조회 | DishInside</title>
+  <link rel="stylesheet" href="/static/css/header.css">
+  <link rel="stylesheet" href="/static/css/review_list.css">
 </head>
 <body>
-    <h1>리뷰조회</h1>
-    
+  {% include 'header.html' %}
+  <main class="review-page">
+    <section class="review-top-card">
+      <div class="restaurant-review-info">
+        <a href="/dsinside" class="back-link">← 메인으로 돌아가기</a>
+
+        <div class="review-title-area">
+          <div>
+            <span class="review-label">REVIEW</span>
+            <h1>둘이 먹다 둘이 죽어도 모르는 집</h1>
+            <p>방문한 사람들이 남긴 솔직한 리뷰를 확인해 보세요.</p>
+          </div>
+
+          <a href="/review/add" class="write-review-button">리뷰 작성</a>
+        </div>
+      </div>
+
+      <div class="rating-summary">
+        <div class="rating-number">
+          <span>★</span>
+          <strong>4.8</strong>
+        </div>
+
+        <div class="rating-detail">
+          <strong>전체 리뷰 3개</strong>
+          <span>평균 만족도가 높은 식당입니다.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="review-list-section">
+      <div class="section-heading">
+        <div>
+          <h2>방문자 리뷰</h2>
+          <p>최신 리뷰부터 확인할 수 있습니다.</p>
+        </div>
+
+        <select class="review-sort" aria-label="리뷰 정렬">
+          <option>최신순</option>
+          <option>평점 높은순</option>
+          <option>평점 낮은순</option>
+        </select>
+      </div>
+
+      <div class="review-list">
+        <article class="review-card">
+          <div class="reviewer-area">
+            <div class="reviewer-avatar" aria-hidden="true">B</div>
+
+            <div class="reviewer-info">
+              <strong>botchi</strong>
+              <span>2026.09.07</span>
+            </div>
+
+            <div class="review-score" aria-label="평점 5점">
+              <span>★</span>
+              <strong>5.0</strong>
+            </div>
+          </div>
+
+          <div class="review-content">
+            <div class="review-tags">
+              <span>둘이 먹으면 하나 죽는 집</span>
+              <span>재방문 의사 있음</span>
+            </div>
+
+            <p>
+              이름은 살벌한데 음식은 진짜 맛있어요 ㅋㅋ 메뉴도 깔끔하게 나오고
+              직원분들도 친절해서 다음에 또 방문하고 싶습니다.
+            </p>
+          </div>
+
+          <div class="review-actions">
+            <button type="button" class="helpful-button">도움돼요 3</button>
+            <a href="/review/update/1">수정</a>
+            <button type="button" class="delete-button">삭제</button>
+          </div>
+        </article>
+
+        <article class="review-card">
+          <div class="reviewer-area">
+            <div class="reviewer-avatar" aria-hidden="true">F</div>
+
+            <div class="reviewer-info">
+              <strong>foxlover</strong>
+              <span>2026.09.05</span>
+            </div>
+
+            <div class="review-score" aria-label="평점 4점">
+              <span>★</span>
+              <strong>4.5</strong>
+            </div>
+          </div>
+
+          <div class="review-content">
+            <div class="review-tags">
+              <span>혼자 먹으면 죽는 스파게티</span>
+            </div>
+
+            <p>
+              양도 충분하고 소스가 진해서 좋았습니다. 피크 시간에는 조금 기다렸지만
+              음식 자체는 만족스러웠어요.
+            </p>
+          </div>
+
+          <div class="review-actions">
+            <button type="button" class="helpful-button">도움돼요 1</button>
+          </div>
+        </article>
+
+        <article class="review-card">
+          <div class="reviewer-area">
+            <div class="reviewer-avatar" aria-hidden="true">D</div>
+
+            <div class="reviewer-info">
+              <strong>dishinside</strong>
+              <span>2026.09.01</span>
+            </div>
+
+            <div class="review-score" aria-label="평점 5점">
+              <span>★</span>
+              <strong>5.0</strong>
+            </div>
+          </div>
+
+          <div class="review-content">
+            <div class="review-tags">
+              <span>전체 메뉴</span>
+              <span>친절함</span>
+            </div>
+
+            <p>
+              음식도 빨리 나오고 매장이 깔끔해서 편하게 먹었습니다.
+              메뉴판도 보기 쉬워서 처음 방문해도 주문하기 좋았어요.
+            </p>
+          </div>
+
+          <div class="review-actions">
+            <button type="button" class="helpful-button">도움돼요 2</button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>Provided by Team. NAT</small>
+  </footer>
 </body>
 </html>

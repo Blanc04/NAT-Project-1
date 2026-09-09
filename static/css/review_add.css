@@ -1,0 +1,421 @@
+:root {
+  --main-color: #ff5b3f;
+  --main-dark: #e7472e;
+  --main-light: #fff1ed;
+  --text: #202124;
+  --sub-text: #777;
+  --border: #e7e7e7;
+  --background: #f6f7f8;
+  --card: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background-color: var(--background);
+  color: var(--text);
+  font-family:
+    "Pretendard",
+    "Noto Sans KR",
+    "Malgun Gothic",
+    sans-serif;
+}
+
+/* 전체 페이지 */
+.review-write-page {
+  width: min(760px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 35px 0 70px;
+}
+
+/* 리뷰 작성 카드 */
+.review-write-card {
+  padding: 32px 34px 34px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background-color: var(--card);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.055);
+}
+
+/* 상단 제목 */
+.review-write-heading {
+  padding-bottom: 27px;
+  border-bottom: 1px solid var(--border);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #888;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--main-dark);
+}
+
+.review-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--main-color);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.review-write-heading h1 {
+  margin: 0 0 9px;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.review-write-heading p {
+  margin: 0;
+  color: var(--sub-text);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.review-write-heading p strong {
+  color: #4a4a4a;
+}
+
+/* 폼 전체 */
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+  padding-top: 28px;
+}
+
+.form-field,
+.rating-field {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.form-field > label,
+.rating-field legend,
+.field-heading label {
+  color: #333;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.field-description {
+  margin: 7px 0 0;
+  color: #999;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.field-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.field-heading span {
+  color: #aaa;
+  font-size: 11px;
+}
+
+/* 별점 */
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 4px;
+  width: max-content;
+  margin-top: 13px;
+}
+
+.star-rating input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.star-rating label {
+  color: #ddd;
+  font-size: 38px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+  color: var(--main-color);
+}
+
+.star-rating label:hover {
+  transform: translateY(-2px);
+}
+
+.star-rating input:focus-visible + label {
+  border-radius: 4px;
+  outline: 2px solid var(--main-color);
+  outline-offset: 3px;
+}
+
+/* 리뷰 내용 */
+.review-form textarea {
+  display: block;
+  width: 100%;
+  min-height: 220px;
+  padding: 16px;
+  resize: vertical;
+  border: 1px solid #dedede;
+  border-radius: 12px;
+  outline: none;
+  background-color: #fafafa;
+  color: #333;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.7;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.review-form textarea::placeholder {
+  color: #aaa;
+}
+
+.review-form textarea:hover {
+  border-color: #cfcfcf;
+  background-color: #fff;
+}
+
+.review-form textarea:focus {
+  border-color: var(--main-color);
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(255, 91, 63, 0.1);
+}
+
+/* 사진 첨부 */
+.file-upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 135px;
+  margin-top: 12px;
+  padding: 20px;
+  border: 1px dashed #d9d9d9;
+  border-radius: 12px;
+  background-color: #fafafa;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.file-upload-box:hover {
+  border-color: var(--main-color);
+  background-color: #fff8f5;
+}
+
+.file-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  background-color: var(--main-light);
+  color: var(--main-color);
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.file-upload-box strong {
+  color: #555;
+  font-size: 13px;
+}
+
+.file-upload-box small {
+  margin-top: 5px;
+  color: #aaa;
+  font-size: 11px;
+}
+
+.file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.file-input:focus-visible + * {
+  outline: 2px solid var(--main-color);
+}
+
+/* 안내 */
+.review-notice {
+  padding: 15px 17px;
+  border: 1px solid #f1ded8;
+  border-radius: 10px;
+  background-color: #fff9f7;
+}
+
+.review-notice strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #925646;
+  font-size: 12px;
+}
+
+.review-notice p {
+  margin: 0;
+  color: #9a746a;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* 버튼 */
+.form-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.cancel-button,
+.submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 20px;
+  border-radius: 11px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cancel-button {
+  border: 1px solid #dedede;
+  background-color: #fff;
+  color: #666;
+}
+
+.cancel-button:hover {
+  border-color: #cfcfcf;
+  background-color: #f7f7f7;
+  color: #444;
+  transform: translateY(-1px);
+}
+
+.submit-button {
+  border: 1px solid var(--main-color);
+  background-color: var(--main-color);
+  color: #fff;
+}
+
+.submit-button:hover {
+  border-color: var(--main-dark);
+  background-color: var(--main-dark);
+  box-shadow: 0 7px 16px rgba(255, 91, 63, 0.22);
+  transform: translateY(-1px);
+}
+
+.cancel-button:active,
+.submit-button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+/* 푸터 */
+.site-footer {
+  padding: 25px 20px;
+  border-top: 1px solid var(--border);
+  background-color: #fff;
+  color: #999;
+  text-align: center;
+}
+
+.site-footer small {
+  font-size: 12px;
+}
+
+/* 모바일 */
+@media (max-width: 600px) {
+  .review-write-page {
+    width: calc(100% - 20px);
+    padding-top: 20px;
+  }
+
+  .review-write-card {
+    padding: 22px 17px 24px;
+    border-radius: 15px;
+  }
+
+  .review-write-heading {
+    padding-bottom: 22px;
+  }
+
+  .review-write-heading h1 {
+    font-size: 24px;
+  }
+
+  .review-form {
+    gap: 24px;
+    padding-top: 24px;
+  }
+
+  .star-rating label {
+    font-size: 34px;
+  }
+
+  .review-form textarea {
+    min-height: 190px;
+  }
+
+  .file-upload-box {
+    min-height: 120px;
+  }
+
+  .form-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .cancel-button {
+    order: 2;
+  }
+
+  .submit-button {
+    order: 1;
+  }
+}
