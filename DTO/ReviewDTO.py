@@ -15,4 +15,4 @@ class Review(SQLModel, table=True):
     )
     review_content : str
     rating : Optional[float]
-    review_time : str = datetime.now()
+    review_time : datetime

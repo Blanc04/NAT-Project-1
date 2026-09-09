@@ -6,10 +6,23 @@ from sqlmodel import create_engine,Session,SQLModel
 from fastapi import FastAPI,Depends
 from fastapi.staticfiles import StaticFiles
 
+from datetime import datetime
+
+from sqlalchemy import text
+
+from DTO.ReviewDTO import Review
 
 app = FastAPI()
 templates = Jinja2Templates(directory='templates/')  
 
+DATABASE_URL = 'mysql+pymysql://root:human1234$@127.0.0.1:3306/human'
+
+engine = create_engine(DATABASE_URL,echo=True)
+
+def get_session():
+    with Session(engine) as session :
+        yield session
+        session.commit()
 
 app.mount(
     "/static",
@@ -55,13 +68,48 @@ def restaurantUpdate(request:Request):
 
     
 @app.get('/review/list')
-def review(request:Request):
-    return templates.TemplateResponse(request,'review.html')
+def review(request:Request, 
+           session:Session = Depends(get_session)):
+    
+    try:
+        sql = text('''
+                   select m.name, r.review_content, r.rating, r.review_time
+                   from review as r join member as m usint(member_code)
+                   ''')
+        
+        result = session.execute(sql)
+        review_list = result.mappings().fetchall()
+        
+    except Exception as e:
+        print(e)
+    
+    return templates.TemplateResponse(request,'review.html', {
+        'review_list': review_list
+    })
 
 @app.get('/review/add')
 def review(request:Request):
     return templates.TemplateResponse(request,'review_add.html')
 
+@app.post('/review/add')
+def review_add(
+    review: Review =Form(),
+    session:Session = Depends(get_session)
+    ):
+    print("/review/add 실행 성공")
+    print("review:", review)
+    
+    sql = text('''
+               insert into review (review_content, rating, review_time)
+               values ( :review_content, :rating, :review_time)
+               ''')
+    
+    session.execute(sql, {'review_content': review.review_content, 'rating': review.rating, 'review_time': datetime.now()})
+    
+    return RedirectResponse(
+        url='/review/list',
+        status_code=303
+    )
 
 # 회원 가입창 넘어가는 부분
 @app.get('/signup')
