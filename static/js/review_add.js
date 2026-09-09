@@ -3,6 +3,7 @@ const init = () => {
 }
 
 window.onload = init
+// window.addEventListener('load', init)
 
 const bind = () => {
     const textarea = document.getElementById('review-content')
@@ -23,5 +24,34 @@ const bind = () => {
         }
         // 실시간 글자 수 업데이트
         charCount.textContent = `${currentLength} / 1,000자`
+        console.log(charCount.textContent)
+    })
+
+
+    const imageInput = document.querySelector('#review-image')
+    const imagePreview = document.querySelector('#image-preview')
+    const fileUploadBox = document.querySelector('.file-upload-box')
+
+    imageInput.addEventListener('click', function() {
+        console.log('파일 input 클릭됨')
+    })
+
+    imageInput.addEventListener('change', function() {
+        console.log('change 발생')
+
+        const file = imageInput.files[0]
+
+        console.log('선택 파일:', file)
+
+        if (file) {
+            // 선택한 이미지 미리보기 (독학)
+            imagePreview.src = URL.createObjectURL(file)
+
+            fileUploadBox.querySelector('.file-icon').style.display = 'none'
+            fileUploadBox.querySelector('strong').style.display = 'none'
+            fileUploadBox.querySelector('small').style.display = 'none'
+
+            imagePreview.style.display = 'block'
+        }
     })
 }
