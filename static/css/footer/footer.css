@@ -1,0 +1,238 @@
+/* ==============================
+   DISH INSIDE Footer
+============================== */
+
+.site-footer {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-top: 80px;
+    padding: 38px 20px 28px;
+
+    background-color: #f7f7f7;
+    border-top: 1px solid #e8e8e8;
+
+    color: #666;
+
+    font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        "Malgun Gothic",
+        sans-serif;
+
+    text-align: center;
+}
+
+
+/* ==============================
+   상단 메뉴
+============================== */
+
+.footer-menu {
+    width: min(1200px, 100%);
+    margin: 0 auto 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* DISH INSIDE 로고 텍스트 */
+.footer-menu strong {
+    margin-right: 12px;
+
+    color: #ff5b3f;
+
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+
+/* 메뉴 글자 */
+.footer-menu span {
+    color: #555;
+}
+
+
+/* 회사소개 / 이용약관 등 hover */
+.footer-menu span:nth-of-type(odd) {
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease;
+}
+
+
+.footer-menu span:nth-of-type(odd):hover {
+    color: #ff5b3f;
+}
+
+
+/* | 구분선 */
+.footer-menu span:nth-of-type(even) {
+    margin: 0 3px;
+
+    color: #ccc;
+
+    cursor: default;
+}
+
+
+/* ==============================
+   회사 정보
+============================== */
+
+.footer-info {
+    width: min(1100px, 100%);
+    margin: 0 auto 18px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    color: #888;
+
+    font-size: 12px;
+    line-height: 2;
+}
+
+
+/* 각 회사정보 */
+.footer-info span {
+    display: inline-flex;
+    align-items: center;
+}
+
+
+/* 정보 사이 구분선 */
+.footer-info span:not(:last-child)::after {
+    content: "";
+
+    width: 1px;
+    height: 11px;
+
+    margin: 0 12px;
+
+    background-color: #d8d8d8;
+}
+
+
+/* ==============================
+   저작권
+============================== */
+
+.footer-copyright {
+    display: block;
+
+    width: min(1200px, 100%);
+    margin: 0 auto;
+
+    padding-top: 16px;
+
+    border-top: 1px solid #e5e5e5;
+
+    color: #aaa;
+
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+
+/* ==============================
+   Tablet
+============================== */
+
+@media (max-width: 768px) {
+
+    .site-footer {
+        margin-top: 60px;
+        padding: 32px 20px 25px;
+    }
+
+
+    .footer-menu {
+        gap: 6px;
+
+        font-size: 12px;
+    }
+
+
+    .footer-menu strong {
+        width: 100%;
+
+        margin: 0 0 8px;
+
+        font-size: 16px;
+    }
+
+
+    .footer-info {
+        width: 100%;
+
+        line-height: 1.9;
+    }
+
+
+    .footer-info span:not(:last-child)::after {
+        margin: 0 8px;
+    }
+}
+
+
+/* ==============================
+   Mobile
+============================== */
+
+@media (max-width: 480px) {
+
+    .site-footer {
+        margin-top: 45px;
+        padding: 28px 16px 22px;
+    }
+
+
+    .footer-menu {
+        line-height: 1.8;
+    }
+
+
+    .footer-menu strong {
+        margin-bottom: 10px;
+
+        font-size: 16px;
+    }
+
+
+    /* 모바일에서는 회사 정보를 한 줄씩 */
+    .footer-info {
+        display: flex;
+        flex-direction: column;
+
+        gap: 3px;
+
+        line-height: 1.7;
+    }
+
+
+    /* 모바일에서는 세로 구분선 제거 */
+    .footer-info span:not(:last-child)::after {
+        display: none;
+    }
+
+ 
+    .footer-copyright {
+        margin-top: 4px;
+        padding-top: 14px;
+
+        font-size: 10px;
+    }
+}
