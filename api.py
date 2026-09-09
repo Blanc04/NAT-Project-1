@@ -75,7 +75,7 @@ def review(request:Request,
     
     try:
         sql = text('''
-                   select m.name, r.review_content, r.rating as rating, date_format(r.review_time, '%Y.%m.%d') review_time
+                   select member_id, r.review_content, r.rating as rating, date_format(r.review_time, '%Y.%m.%d') review_time
                    from review as r join member as m on r.member_code = m.member_code
                    ''')
         
