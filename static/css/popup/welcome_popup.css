@@ -1,0 +1,293 @@
+/* =========================
+   방문 환영 팝업
+========================= */
+
+.popup {
+  position: fixed;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  width: 360px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7e1ee;
+  border-radius: 14px;
+
+  box-shadow:
+    0 20px 60px rgba(45, 24, 72, 0.22),
+    0 5px 18px rgba(45, 24, 72, 0.1);
+
+  overflow: hidden;
+
+  font-family:
+    "Pretendard",
+    "Noto Sans KR",
+    "Malgun Gothic",
+    sans-serif;
+
+  z-index: 99999;
+
+  animation: popupOpen 0.3s ease;
+}
+
+
+/* =========================
+   팝업 상단 타이틀
+========================= */
+
+.popup::before {
+  content: "DISH INSIDE";
+
+  display: block;
+
+  padding: 17px 20px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #eee8f3;
+
+  color: #3e3150;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  text-align: center;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* =========================
+   팝업 내용
+========================= */
+
+.popup-content {
+  padding: 35px 30px 32px;
+
+  background: #ffffff;
+
+  color: #70677c;
+
+  font-size: 14px;
+  line-height: 1.9;
+
+  text-align: center;
+
+  letter-spacing: -0.2px;
+}
+
+
+/* 첫 문장 약간 강조 */
+.popup-content::first-line {
+  color: #3d3545;
+  font-weight: 700;
+}
+
+
+/* 情 강조 */
+.popup-content strong {
+  color: #8f39e8;
+
+  font-family: serif;
+
+  font-size: 19px;
+  font-weight: 800;
+}
+
+
+/* =========================
+   하단 영역
+========================= */
+
+.popup-bottom {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 54px;
+
+  padding: 0 16px;
+
+  background: linear-gradient(
+    90deg,
+    #8a32e8,
+    #9939eb,
+    #7f2bdc
+  );
+
+  border-top: none;
+}
+
+
+/* =========================
+   체크박스 영역
+========================= */
+
+.popup-bottom label {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  user-select: none;
+}
+
+
+/* 체크박스 */
+.chk {
+  width: 15px;
+  height: 15px;
+
+  margin: 0;
+
+  accent-color: #ffffff;
+
+  cursor: pointer;
+}
+
+
+/* =========================
+   닫기 버튼
+========================= */
+
+.close {
+  padding: 7px 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.5);
+
+  border-radius: 6px;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* 닫기 버튼 hover */
+.close:hover {
+  background: #ffffff;
+
+  border-color: #ffffff;
+
+  color: #8430da;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   팝업 포인트 장식
+========================= */
+
+.popup-content::before {
+  content: "♡";
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 54px;
+  height: 54px;
+
+  margin: 0 auto 20px;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    #f4eaff,
+    #eee0ff
+  );
+
+  color: #9139e7;
+
+  font-size: 29px;
+  font-weight: 700;
+}
+
+
+/* =========================
+   JS 숨김 클래스
+========================= */
+
+.hide {
+  display: none;
+}
+
+
+/* =========================
+   등장 애니메이션
+========================= */
+
+@keyframes popupOpen {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translate(-50%, -46%)
+      scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+
+}
+
+
+/* =========================
+   모바일
+========================= */
+
+@media (max-width: 600px) {
+
+  .popup {
+    width: calc(100% - 40px);
+
+    max-width: 360px;
+  }
+
+
+  .popup-content {
+    padding: 30px 22px 28px;
+
+    font-size: 13px;
+  }
+
+
+  .popup-bottom {
+    min-height: 52px;
+
+    padding: 0 13px;
+  }
+
+}
