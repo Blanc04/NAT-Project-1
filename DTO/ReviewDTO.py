@@ -1,5 +1,6 @@
 from sqlmodel import SQLModel, Field
 from typing import Optional
+from datetime import datetime
 
 class Review(SQLModel, table=True):
     review_code : int | None = Field(
@@ -14,3 +15,4 @@ class Review(SQLModel, table=True):
     )
     review_content : str
     rating : Optional[float]
+    review_time : str = datetime.now()
