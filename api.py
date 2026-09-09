@@ -51,14 +51,16 @@ def _login():
 # 리뷰 수정을 하고 나서는 리뷰 수정한 내용을 보여주고 다시 원래 대로 돌아가는게 나을거같음
 @app.get('/restaurant/update')   
 def restaurantUpdate(request:Request):
-   return templates.TemplateResponse(request,'update.html')
-    
+    return templates.TemplateResponse(request,'update.html')
 
- 
     
 @app.get('/review/list')
 def review(request:Request):
-     return templates.TemplateResponse(request,'review.html')
+    return templates.TemplateResponse(request,'review.html')
+
+@app.get('/review/add')
+def review(request:Request):
+    return templates.TemplateResponse(request,'review_add.html')
 
 
 # 회원 가입창 넘어가는 부분
