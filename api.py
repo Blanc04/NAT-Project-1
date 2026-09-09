@@ -13,7 +13,7 @@ from sqlalchemy import text
 from DTO.ReviewDTO import Review
 
 app = FastAPI()
-templates = Jinja2Templates(directory='templates/')  
+templates = Jinja2Templates(directory='templates/')
 
 DATABASE_URL = 'mysql+pymysql://root:human1234$@127.0.0.1:3306/human'
 
@@ -29,6 +29,8 @@ app.mount(
     StaticFiles(directory="static"),
     name="static"
 )
+
+
 
 # 처음에 메인 주소
 @app.get('/dsinside')
@@ -73,12 +75,14 @@ def review(request:Request,
     
     try:
         sql = text('''
-                   select m.name, r.review_content, r.rating, r.review_time
-                   from review as r join member as m usint(member_code)
+                   select m.name, r.review_content, r.rating as rating, date_format(r.review_time, '%Y.%m.%d') review_time
+                   from review as r join member as m on r.member_code = m.member_code
                    ''')
         
         result = session.execute(sql)
         review_list = result.mappings().fetchall()
+        print(review_list)
+        
         
     except Exception as e:
         print(e)
