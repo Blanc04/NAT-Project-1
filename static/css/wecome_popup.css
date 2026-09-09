@@ -1,0 +1,216 @@
+/* =========================
+   방문 환영 팝업
+========================= */
+
+.welcome-popup-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  background: rgba(25, 21, 19, 0.35);
+  backdrop-filter: blur(4px);
+
+  z-index: 9999;
+}
+
+.welcome-popup {
+  position: relative;
+
+  width: min(430px, 100%);
+  overflow: hidden;
+
+  background: #ffffff;
+  border-radius: 24px;
+
+  box-shadow:
+    0 25px 70px rgba(35, 25, 20, 0.18),
+    0 5px 20px rgba(35, 25, 20, 0.08);
+
+  animation: welcomePopupOpen 0.35s ease;
+}
+
+.welcome-popup-x {
+  position: absolute;
+  top: 17px;
+  right: 19px;
+
+  width: 34px;
+  height: 34px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: transparent;
+  color: #9b938f;
+
+  font-size: 27px;
+  font-weight: 300;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.welcome-popup-x:hover {
+  background: #f7f4f2;
+  color: #ff5b3f;
+}
+
+
+/* 내용 */
+
+.welcome-popup-content {
+  padding: 48px 42px 38px;
+
+  text-align: center;
+}
+
+.welcome-popup-label {
+  display: inline-block;
+
+  margin-bottom: 19px;
+
+  color: #ff5b3f;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+}
+
+.welcome-popup-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 72px;
+  height: 72px;
+
+  margin: 0 auto 22px;
+
+  border-radius: 22px;
+
+  background: #fff2ee;
+  color: #ff5b3f;
+
+  font-size: 35px;
+  font-family: serif;
+  font-weight: 700;
+}
+
+.welcome-popup-content h2 {
+  margin: 0 0 16px;
+
+  color: #282321;
+
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.45;
+  letter-spacing: -0.8px;
+}
+
+.welcome-popup-content p {
+  margin: 0;
+
+  color: #746c68;
+
+  font-size: 15px;
+  line-height: 1.8;
+  letter-spacing: -0.3px;
+}
+
+.welcome-popup-content p strong {
+  color: #ff5b3f;
+  font-family: serif;
+  font-size: 17px;
+}
+
+
+/* 하단 버튼 */
+
+.welcome-popup-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  border-top: 1px solid #eee9e6;
+}
+
+.welcome-popup-footer button {
+  height: 58px;
+
+  border: none;
+
+  background: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.hide-week-btn {
+  color: #918783;
+
+  border-right: 1px solid #eee9e6 !important;
+}
+
+.hide-week-btn:hover {
+  background: #faf8f7;
+  color: #514946;
+}
+
+.close-popup-btn {
+  color: #ff5b3f;
+}
+
+.close-popup-btn:hover {
+  background: #fff5f2;
+}
+
+
+/* 등장 효과 */
+
+@keyframes welcomePopupOpen {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* 모바일 */
+
+@media (max-width: 520px) {
+
+  .welcome-popup {
+    border-radius: 20px;
+  }
+
+  .welcome-popup-content {
+    padding: 45px 25px 34px;
+  }
+
+  .welcome-popup-content h2 {
+    font-size: 21px;
+  }
+
+  .welcome-popup-content p {
+    font-size: 14px;
+  }
+}
