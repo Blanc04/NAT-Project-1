@@ -1,4 +1,5 @@
 from sqlmodel import SQLModel, Field
+from datetime import datetime
 
 class Board(SQLModel, table=True):
     board_code : int | None = Field(
@@ -12,3 +13,4 @@ class Board(SQLModel, table=True):
     board_title : str
     board_content : str
     view_count : int
+    board_time : str = datetime.now()

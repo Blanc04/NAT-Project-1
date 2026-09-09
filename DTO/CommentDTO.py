@@ -1,4 +1,5 @@
 from sqlmodel import SQLModel, Field
+from datetime import datetime
 
 class Comment(SQLModel, table=True):
     comment_code : int | None = Field(
@@ -12,3 +13,4 @@ class Comment(SQLModel, table=True):
         foreign_key = 'Member.member_code'
     )
     comment_content : str
+    comment_time : str = datetime.now()
