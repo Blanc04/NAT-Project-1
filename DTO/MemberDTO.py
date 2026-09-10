@@ -10,3 +10,5 @@ class Member(SQLModel, table=True):
 	member_pw : str
 	member_pnum : str
 	admin_code : int
+ 
+ 
