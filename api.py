@@ -17,6 +17,7 @@ from sqlalchemy import text
 
 from DTO.UserDTO import Member
 from DTO.ReviewDTO import Review
+from DTO.MemberDTO import Member
 
 app = FastAPI()
 templates = Jinja2Templates(directory='templates/')  
@@ -77,24 +78,29 @@ def api_login(request:Request,
         pass
 
     return RedirectResponse(               
-             url='/dsinside',
-             status_code=303 # 303: 무조건 GET으로 다시 들어오게 한다
-                   )
+        url='/dsinside',
+        status_code=303 # 303: 무조건 GET으로 다시 들어오게 한다
+    )
 
 # 리뷰 수정을 하러 가는 곳
-# 리뷰 수정을 하고 나서는 리뷰 수정한 내용을 보여주고 다시 원래 대로 돌아가는게 나을거같음
+# 리뷰 수정을 하고 나서는 리뷰 수정한 내용을 보여주고 다시 원래 대로 돌아가는게 나을 거 같음
+## 이거 작성글 정보 수정 아님???????????
 @app.get('/restaurant/update')   
 def restaurantUpdate(request:Request):
     return templates.TemplateResponse(request,'update.html')
 
     
 @app.get('/review/list')
-def review(request:Request, 
-        session:Session = Depends(get_session)):
+def review(
+    request:Request, 
+    session:Session = Depends(get_session)
+):
+
+    review_list = []
     
     try:
         sql = text('''
-                   select m.name, r.review_content, r.rating, r.review_time
+                   select m.member_id, review_content, rating, date_format(review_time, "%Y.%m.%d") as review_time
                    from review as r join member as m using(member_code)
                    ''')
         
@@ -120,12 +126,20 @@ def review_add2(
     print("/review/add 실행 성공")
     print("review:", review)
     
-    sql = text('''
-               insert into review (review_content, rating, review_time)
-               values ( :review_content, :rating, :review_time)
-               ''')
+    try:
+        sql = text('''
+                insert into review (review_content, rating, review_time)
+                values ( :review_content, :rating, :review_time)
+                ''')
+        
+        session.exec(sql, {'review_content': review.review_content, 'rating': review.rating, 'review_time': datetime.now()})
     
+<<<<<<< HEAD
     session.exec(sql, {'review_content': review.review_content, 'rating': review.rating, 'review_time': datetime.now()})
+=======
+    except Exception as e:
+        print(e)
+>>>>>>> 558ae3515eb3e68f3ce1b1cb541001317ecc419b
     
     return RedirectResponse(
         url='/review/list',
@@ -134,18 +148,57 @@ def review_add2(
 
 # 회원 가입창 넘어가는 부분
 @app.get('/signup')
-def sing_up(request:Request):
-    return templates.TemplateResponse(request,'sign_up.html')
+def sign_up(
+        request:Request,
+        session: Session = Depends(get_session)
+    ):
+
+    try:
+        id_chk_sql = text('''
+                        select member_id
+                        from member
+                        ''')
+        result = session.exec(id_chk_sql)
+        id_list = result.mappings().fetchall()
+        
+    except Exception as e:
+        print(e)
+        
+                
+    return templates.TemplateResponse(
+        request,'sign_up.html', {
+        'id_list': id_list
+        }
+    )
     
 @app.post('/api/signup')
-def _signup():
+def _signup(
+            member:Member=Form(),
+            session:Session = Depends(get_session)
+    ):
+    print('/api/signup 실행 성공')
+    print('member:', member)
     
+    try:
+        sql = text('''
+                   insert into member (name, member_id, member_pw, member_pnum)
+                   values ( :name, :member_id, :memeber_pw, :member_pnum )
+                   ''')
+        session.exec(sql, dict(member))
+        
+    except Exception as e:
+        print(e)
     
     return RedirectResponse(               
+<<<<<<< HEAD
         url='/dsinside',
+=======
+        url='/login',
+>>>>>>> 558ae3515eb3e68f3ce1b1cb541001317ecc419b
         status_code=303 # 303: 무조건 GET으로 돌아오게 함
     )   
-    
+
+
 @app.get('/mypage')
 def mypage(request:Request):
     return templates.TemplateResponse(request,'mypage.html')    
@@ -153,13 +206,8 @@ def mypage(request:Request):
 
 
 
-
-
-
-
 @app.get('/mypage/reviews')
 def reviews(request:Request):
-    
     return templates.TemplateResponse(request,'review_list.html')    
 
 
@@ -220,7 +268,6 @@ def detail(
      return templates.TemplateResponse(request,'detail.html',{'member':a})
                 
     
-
 
 
 

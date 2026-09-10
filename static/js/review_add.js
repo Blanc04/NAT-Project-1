@@ -27,7 +27,9 @@ const bind = () => {
         console.log(charCount.textContent)
     })
 
-//  이미지 파일 미리 보기 소스
+
+
+
     const imageInput = document.querySelector('#review-image')
     const imagePreview = document.querySelector('#image-preview')
     const fileUploadBox = document.querySelector('.file-upload-box')
