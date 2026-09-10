@@ -1,36 +1,43 @@
-import traceback
-# 암호화를 위해 임포트 해주었습니다.
-from passlib.context import CryptContext
-
-from fastapi import Request,Form
+from fastapi import FastAPI, Depends, Request, Form
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel
-from sqlmodel import create_engine,Session,SQLModel
-from fastapi import FastAPI,Depends
 from fastapi.staticfiles import StaticFiles
+
+from sqlmodel import create_engine, Session
+from sqlalchemy import text
 
 from datetime import datetime
 
-from sqlalchemy import text
-
-
-from DTO.UserDTO import Member
 from DTO.ReviewDTO import Review
 from DTO.MemberDTO import Member
 
+
+# =========================================================
+# FastAPI 기본 설정
+# =========================================================
+
 app = FastAPI()
-templates = Jinja2Templates(directory='templates/')  
+
+templates = Jinja2Templates(directory='templates/')
+
 
 DATABASE_URL = 'mysql+pymysql://root:human123$@127.0.0.1:3306/human'
 
-engine = create_engine(DATABASE_URL,echo=True)
+engine = create_engine(
+    DATABASE_URL,
+    echo=True
+)
 
 
 def get_session():
-    with Session(engine) as session :
+    with Session(engine) as session:
         yield session
         session.commit()
+
+
+# =========================================================
+# static 폴더 연결
+# =========================================================
 
 app.mount(
     "/static",
@@ -38,241 +45,401 @@ app.mount(
     name="static"
 )
 
-# 처음에 메인 주소
+
+# =========================================================
+# 메인 페이지
+# =========================================================
+
 @app.get('/dsinside')
-def main(request:Request):
-    return templates.TemplateResponse(request,'main.html')
+def main(request: Request):
 
-# 로그인 화면으로 넘어가는 곳 
-@app.get('/login')
-def login(request:Request):
-    return templates.TemplateResponse(request,'login.html')
-
-
-    
-    
-
-# 검색 후 넘어가는곳 
-@app.get('/search')
-def search(request:Request):
-    return templates.TemplateResponse(request,'search.html')
-
-
-# 현재는 id랑 pw가 같은지 비교하는 로직이 존재하지 않음
-@app.post('/api/login')
-def api_login(request:Request,
-              member_id:str,
-              member_pw : str):
-    try:
-        sql=text(
-            '''
-           select 
-           member_id,
-           member_pw
-           from  member 
-            '''
-            
-        )
-        
-    except Exception as e:
-        pass
-
-    return RedirectResponse(               
-        url='/dsinside',
-        status_code=303 # 303: 무조건 GET으로 다시 들어오게 한다
+    return templates.TemplateResponse(
+        request,
+        'main.html'
     )
 
-# 리뷰 수정을 하러 가는 곳
-# 리뷰 수정을 하고 나서는 리뷰 수정한 내용을 보여주고 다시 원래 대로 돌아가는게 나을 거 같음
-## 이거 작성글 정보 수정 아님???????????
-@app.get('/restaurant/update')   
-def restaurantUpdate(request:Request):
-    return templates.TemplateResponse(request,'update.html')
 
-    
+# =========================================================
+# 로그인 페이지
+# =========================================================
+
+@app.get('/login')
+def login(request: Request):
+
+    return templates.TemplateResponse(
+        request,
+        'login.html'
+    )
+
+
+# =========================================================
+# 로그인 처리
+# 현재는 ID / PW 비교 로직 구현 전
+# =========================================================
+
+@app.post('/api/login')
+def _login():
+
+    try:
+        pass
+
+    except Exception as e:
+        print(e)
+
+    return RedirectResponse(
+        url='/dsinside',
+        status_code=303
+    )
+
+
+# =========================================================
+# 검색
+# =========================================================
+
+@app.get('/search')
+def search(request: Request):
+
+    return templates.TemplateResponse(
+        request,
+        'search.html'
+    )
+
+
+# =========================================================
+# 식당 정보 수정
+# =========================================================
+
+@app.get('/restaurant/update')
+def restaurantUpdate(request: Request):
+
+    return templates.TemplateResponse(
+        request,
+        'update.html'
+    )
+
+
+# =========================================================
+# 리뷰 전체 조회
+# =========================================================
+
 @app.get('/review/list')
 def review(
-    request:Request, 
-    session:Session = Depends(get_session)
+    request: Request,
+    session: Session = Depends(get_session)
 ):
 
     review_list = []
-    
+
     try:
+
         sql = text('''
-                   select m.member_id, review_content, rating, date_format(review_time, "%Y.%m.%d") as review_time
-                   from review as r join member as m using(member_code)
-                   ''')
-        
+            SELECT
+                m.member_id,
+                review_content,
+                rating,
+                DATE_FORMAT(review_time, "%Y.%m.%d") AS review_time
+            FROM review AS r
+            JOIN member AS m
+            USING(member_code)
+        ''')
+
         result = session.exec(sql)
+
         review_list = result.mappings().fetchall()
-        
+
+        print('리뷰 조회 결과:', review_list)
+
     except Exception as e:
-        print(e)
-    
-    return templates.TemplateResponse(request,'review.html', {
-        'review_list': review_list
-    })
+
+        print('리뷰 조회 에러:', e)
+
+
+    return templates.TemplateResponse(
+        request,
+        'review.html',
+        {
+            'review_list': review_list
+        }
+    )
+
+
+# =========================================================
+# 리뷰 작성 페이지
+# =========================================================
 
 @app.get('/review/add')
-def review_add(request:Request):
-    return templates.TemplateResponse(request,'review_add.html')
+def review_add(request: Request):
+
+    return templates.TemplateResponse(
+        request,
+        'review_add.html'
+    )
+
+
+# =========================================================
+# 리뷰 작성 처리
+# =========================================================
 
 @app.post('/review/add')
 def review_add2(
-    review: Review =Form(),
-    session:Session = Depends(get_session)
-    ):
+    review: Review = Form(),
+    session: Session = Depends(get_session)
+):
+
     print("/review/add 실행 성공")
     print("review:", review)
-    
+
     try:
+
         sql = text('''
-                insert into review (review_content, rating, review_time)
-                values ( :review_content, :rating, :review_time)
-                ''')
-        
-        session.exec(sql, {'review_content': review.review_content, 'rating': review.rating, 'review_time': datetime.now()})
-    
-<<<<<<< HEAD
-    session.exec(sql, {'review_content': review.review_content, 'rating': review.rating, 'review_time': datetime.now()})
-=======
+            INSERT INTO review
+            (
+                review_content,
+                rating,
+                review_time
+            )
+            VALUES
+            (
+                :review_content,
+                :rating,
+                :review_time
+            )
+        ''')
+
+        session.exec(
+            sql,
+            params={
+                'review_content': review.review_content,
+                'rating': review.rating,
+                'review_time': datetime.now()
+            }
+        )
+
     except Exception as e:
-        print(e)
->>>>>>> 558ae3515eb3e68f3ce1b1cb541001317ecc419b
-    
+
+        print('리뷰 등록 에러:', e)
+
+
     return RedirectResponse(
         url='/review/list',
         status_code=303
     )
 
-# 회원 가입창 넘어가는 부분
+
+# =========================================================
+# 회원가입 페이지
+# =========================================================
+
 @app.get('/signup')
 def sign_up(
-        request:Request,
-        session: Session = Depends(get_session)
-    ):
+    request: Request,
+    session: Session = Depends(get_session)
+):
+
+    id_list = []
 
     try:
+
         id_chk_sql = text('''
-                        select member_id
-                        from member
-                        ''')
+            SELECT member_id
+            FROM member
+        ''')
+
         result = session.exec(id_chk_sql)
+
         id_list = result.mappings().fetchall()
-        
+
     except Exception as e:
-        print(e)
-        
-                
+
+        print('회원 ID 조회 에러:', e)
+
+
     return templates.TemplateResponse(
-        request,'sign_up.html', {
-        'id_list': id_list
+        request,
+        'sign_up.html',
+        {
+            'id_list': id_list
         }
     )
-    
+
+
+# =========================================================
+# 회원가입 처리
+# =========================================================
+
 @app.post('/api/signup')
 def _signup(
-            member:Member=Form(),
-            session:Session = Depends(get_session)
-    ):
+    member: Member = Form(),
+    session: Session = Depends(get_session)
+):
+
     print('/api/signup 실행 성공')
     print('member:', member)
-    
-    try:
-        sql = text('''
-                   insert into member (name, member_id, member_pw, member_pnum)
-                   values ( :name, :member_id, :memeber_pw, :member_pnum )
-                   ''')
-        session.exec(sql, dict(member))
-        
-    except Exception as e:
-        print(e)
-    
-    return RedirectResponse(               
-<<<<<<< HEAD
-        url='/dsinside',
-=======
-        url='/login',
->>>>>>> 558ae3515eb3e68f3ce1b1cb541001317ecc419b
-        status_code=303 # 303: 무조건 GET으로 돌아오게 함
-    )   
 
+    try:
+
+        sql = text('''
+            INSERT INTO member
+            (
+                name,
+                member_id,
+                member_pw,
+                member_pnum
+            )
+            VALUES
+            (
+                :name,
+                :member_id,
+                :member_pw,
+                :member_pnum
+            )
+        ''')
+
+        session.exec(
+            sql,
+            params={
+                'name': member.name,
+                'member_id': member.member_id,
+                'member_pw': member.member_pw,
+                'member_pnum': member.member_pnum
+            }
+        )
+
+    except Exception as e:
+
+        print('회원가입 에러:', e)
+
+
+    return RedirectResponse(
+        url='/login',
+        status_code=303
+    )
+
+
+# =========================================================
+# 마이페이지
+# =========================================================
 
 @app.get('/mypage')
-def mypage(request:Request):
-    return templates.TemplateResponse(request,'mypage.html')    
+def mypage(request: Request):
+
+    return templates.TemplateResponse(
+        request,
+        'mypage.html'
+    )
 
 
-
+# =========================================================
+# 마이페이지 - 리뷰
+# =========================================================
 
 @app.get('/mypage/reviews')
-def reviews(request:Request):
-    return templates.TemplateResponse(request,'review_list.html')    
+def reviews(request: Request):
+
+    return templates.TemplateResponse(
+        request,
+        'review_list.html'
+    )
 
 
-# ==================관리자 페이지 라우팅 ==================
-# 전체 조회부터 되는지 테스트
+# =========================================================
+# 관리자 페이지
+# 회원 전체 조회
+# =========================================================
+
 @app.get('/manager')
 def manager(
     request: Request,
     session: Session = Depends(get_session)
 ):
-    
-    
+
+    member = []
+
     try:
+
         sql = text('''
-            SELECT * FROM member
+            SELECT *
+            FROM member
         ''')
+
         result = session.exec(sql)
+
         member = result.mappings().fetchall()
-        print(member)
-        
+
+        print('회원 전체 조회:', member)
+
     except Exception as e:
+
         print(f"데이터베이스 조회 중 에러 발생: {e}")
-        
-        
+
+
     return templates.TemplateResponse(
-        request, 
-        'admin_member.html',  
-        {'member': member}
+        request,
+        'admin_member.html',
+        {
+            'member': member
+        }
     )
 
 
-# ==================상세 페이지 ==================   
+# =========================================================
+# 관리자 페이지
+# 회원 상세 조회
+# =========================================================
+
 @app.get('/detail')
 def detail(
-    request:Request,
-    member_id:str,
-    session:Session=Depends(get_session)
+    request: Request,
+    member_id: str,
+    session: Session = Depends(get_session)
 ):
-     
-     try :
-         sql=session.exec(text('''
-            select *
-            from member
-            where member_id=:member_id            
-         '''),params={'member_id':member_id})
-        #  rows=result.fetchone()
-     
-         a=sql.mappings().fetchone()
-       
-         print('fetchone결과:',a)
-       
-         
-           
-     except Exception as e :
-            print(e)        
-    
-    
-     return templates.TemplateResponse(request,'detail.html',{'member':a})
-                
-    
+
+    member = None
+
+    try:
+
+        sql = text('''
+            SELECT *
+            FROM member
+            WHERE member_id = :member_id
+        ''')
+
+        result = session.exec(
+            sql,
+            params={
+                'member_id': member_id
+            }
+        )
+
+        member = result.mappings().fetchone()
+
+        print('fetchone 결과:', member)
+
+    except Exception as e:
+
+        print('회원 상세조회 에러:', e)
 
 
+    return templates.TemplateResponse(
+        request,
+        'detail.html',
+        {
+            'member': member
+        }
+    )
 
 
-# 서버 키는 곳
+# =========================================================
+# 서버 실행
+# =========================================================
+
 if __name__ == '__main__':
+
     import uvicorn
-    uvicorn.run('api:app', port=8000, reload=True,host='0.0.0.0')
+
+    uvicorn.run(
+        'api:app',
+        port=8000,
+        reload=True,
+        host='0.0.0.0'
+    )
