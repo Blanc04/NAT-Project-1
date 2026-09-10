@@ -11,6 +11,7 @@ from datetime import datetime
 from sqlalchemy import text
 
 from DTO.ReviewDTO import Review
+from DTO.MemberDTO import Member
 
 app = FastAPI()
 templates = Jinja2Templates(directory='templates/')  
@@ -72,11 +73,11 @@ def review(request:Request,
     
     try:
         sql = text('''
-                   select m.name, r.review_content, r.rating, r.review_time
+                   select m.member_id, review_content, rating, date_format(review_time, "%Y.%m.%d") as review_time
                    from review as r join member as m using(member_code)
                    ''')
         
-        result = session.execute(sql)
+        result = session.exec(sql)
         review_list = result.mappings().fetchall()
         
     except Exception as e:
@@ -98,12 +99,16 @@ def review_add2(
     print("/review/add 실행 성공")
     print("review:", review)
     
-    sql = text('''
-               insert into review (review_content, rating, review_time)
-               values ( :review_content, :rating, :review_time)
-               ''')
+    try:
+        sql = text('''
+                insert into review (review_content, rating, review_time)
+                values ( :review_content, :rating, :review_time)
+                ''')
+        
+        session.exec(sql, {'review_content': review.review_content, 'rating': review.rating, 'review_time': datetime.now()})
     
-    session.execute(sql, {'review_content': review.review_content, 'rating': review.rating, 'review_time': datetime.now()})
+    except Exception as e:
+        print(e)
     
     return RedirectResponse(
         url='/review/list',
@@ -112,15 +117,48 @@ def review_add2(
 
 # 회원 가입창 넘어가는 부분
 @app.get('/signup')
-def sing_up(request:Request):
-    return templates.TemplateResponse(request,'sign_up.html')
+def sign_up(
+            request:Request,
+            session: Session = Depends(get_session)
+    ):
+    try:
+        id_chk_sql = text('''
+                            select member_id
+                            from member
+                        ''')
+        result = session.exec(id_chk_sql)
+        id_list = result.mappings().fetchall()
+        
+    except Exception as e:
+        print(e)
+        
+                
+    return templates.TemplateResponse(
+        request,'sign_up.html', {
+        'id_list': id_list
+        }
+    )
     
 @app.post('/api/signup')
-def _signup():
+def _signup(
+            member:Member=Form(),
+            session:Session = Depends(get_session)
+    ):
+    print('/api/signup 실행 성공')
+    print('member:', member)
     
+    try:
+        sql = text('''
+                   insert into member (name, member_id, member_pw, member_pnum)
+                   values ( :name, :member_id, :memeber_pw, :member_pnum )
+                   ''')
+        session.exec(sql, dict(member))
+        
+    except Exception as e:
+        print(e)
     
     return RedirectResponse(               
-        url='/bap',
+        url='/login',
         status_code=303 # 303: 무조건 GET으로 돌아오게 함
     )   
     
