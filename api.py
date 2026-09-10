@@ -22,7 +22,14 @@ app = FastAPI()
 
 templates = Jinja2Templates(directory='templates/')
 
+templates = Jinja2Templates(directory='templates/')
+
 DATABASE_URL = 'mysql+pymysql://root:human123$@127.0.0.1:3306/human'
+
+engine = create_engine(
+    DATABASE_URL,
+    echo=True
+)
 
 engine = create_engine(
     DATABASE_URL,
@@ -222,6 +229,14 @@ def sign_up(request: Request):
 # 회원가입 처리
 # =========================================================
 
+ctx_pw = CryptContext(
+    schemes=['argon2'],
+    deprecated='auto'
+)
+
+def crypt(txt):
+    return ctx_pw.hash(txt)
+
 @app.post('/api/signup')
 def _signup(
     member: Member = Form(),
@@ -229,7 +244,9 @@ def _signup(
 ):
     print('/api/signup 실행 성공')
     print('member:', member)
-
+    
+    hashed = crypt(member.member_pw)
+    
     try:
         sql = text('''
             INSERT INTO member (
@@ -251,11 +268,10 @@ def _signup(
             params={
                 'name': member.name,
                 'member_id': member.member_id,
-                'member_pw': member.member_pw,
+                'member_pw': hashed,
                 'member_pnum': member.member_pnum
             }
         )
-
     except Exception as e:
         print('회원가입 에러:', e)
 
@@ -283,6 +299,71 @@ def reviews(request: Request):
         request,
         'review_list.html'
     )
+    
+# ========== 해당 부분은 아직 개발 중입니다========= 
+@app.get('/mypage/update')
+
+def mypage_updatepage(
+    request: Request,
+    session: Session = Depends(get_session)
+):
+
+    try:
+        sql = text('''
+            SELECT *
+            FROM member
+            where member_id=:member_id
+        ''')
+
+        result = session.exec(sql)
+        member = result.mappings().fetchone()
+
+        print('회원 전체 조회:', member)
+
+    except Exception as e:
+        print(f"데이터베이스 조회 중 에러 발생: {e}")
+
+    return templates.TemplateResponse(
+        request,
+        'admin_member.html',
+        {
+            'member': member
+        }
+    )
+   
+
+@app.post('/api/mypage/update')
+def _update(
+    member: Member=Form(),
+    session: Session = Depends(get_session)
+):
+    try:
+        session.exec(
+            text('''
+                UPDATE member
+                SET
+                    member_pw = :member_pw,
+                    member_pnum = :member_pnum
+                WHERE member_id = :member_id
+            '''),
+            params={
+                'member_id': member.member_id,
+                'member_pw': member.member_pw,
+                'member_pnum': member.member_pnum
+            }
+        )
+
+        session.commit()
+
+    except Exception as e:
+        print('에러 발생 수정요망', e)
+
+    return RedirectResponse(
+        url='/mypage/update',
+        status_code=303
+    ) 
+  
+        
 
 
 # =========================================================
@@ -361,6 +442,29 @@ def detail(
             'member': member
         }
     )
+
+# =========================================================
+# 게시판라우팅
+# =========================================================
+
+@app.get('/board')
+def board(request:Request):
+     return templates.TemplateResponse(
+            request,
+            'board.html'
+        )
+     
+
+#글쓰기 버튼을 눌렀을때 이동하는 곳
+     
+@app.get('/board/write')
+def board_write(request:Request):
+    
+  return templates.TemplateResponse(
+             request,
+             'board_write.html'
+         )
+
 
 
 # =========================================================
