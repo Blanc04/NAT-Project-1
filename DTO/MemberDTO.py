@@ -1,4 +1,5 @@
 from sqlmodel import SQLModel, Field
+from typing import Optional
 
 class Member(SQLModel, table=True):
 	member_code : int | None = Field(
@@ -9,4 +10,6 @@ class Member(SQLModel, table=True):
 	member_id : str
 	member_pw : str
 	member_pnum : str
-	admin_code : int
+	admin_code : int = Field(
+		default = 0
+	)
