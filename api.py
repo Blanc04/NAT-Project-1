@@ -56,20 +56,25 @@ def _login():
         pass
 
     return RedirectResponse(               
-             url='/dsinside',
-             status_code=303 # 303: 무조건 GET으로 다시 들어오게 한다
-                   )
+        url='/dsinside',
+        status_code=303 # 303: 무조건 GET으로 다시 들어오게 한다
+    )
 
 # 리뷰 수정을 하러 가는 곳
-# 리뷰 수정을 하고 나서는 리뷰 수정한 내용을 보여주고 다시 원래 대로 돌아가는게 나을거같음
+# 리뷰 수정을 하고 나서는 리뷰 수정한 내용을 보여주고 다시 원래 대로 돌아가는게 나을 거 같음
+## 이거 작성글 정보 수정 아님???????????
 @app.get('/restaurant/update')   
 def restaurantUpdate(request:Request):
     return templates.TemplateResponse(request,'update.html')
 
     
 @app.get('/review/list')
-def review(request:Request, 
-        session:Session = Depends(get_session)):
+def review(
+    request:Request, 
+    session:Session = Depends(get_session)
+):
+
+    review_list = []
     
     try:
         sql = text('''
@@ -118,13 +123,14 @@ def review_add2(
 # 회원 가입창 넘어가는 부분
 @app.get('/signup')
 def sign_up(
-            request:Request,
-            session: Session = Depends(get_session)
+        request:Request,
+        session: Session = Depends(get_session)
     ):
+
     try:
         id_chk_sql = text('''
-                            select member_id
-                            from member
+                        select member_id
+                        from member
                         ''')
         result = session.exec(id_chk_sql)
         id_list = result.mappings().fetchall()
@@ -161,7 +167,8 @@ def _signup(
         url='/login',
         status_code=303 # 303: 무조건 GET으로 돌아오게 함
     )   
-    
+
+
 @app.get('/mypage')
 def mypage(request:Request):
     return templates.TemplateResponse(request,'mypage.html')    
@@ -169,15 +176,9 @@ def mypage(request:Request):
 
 
 
-
-
-
-
 @app.get('/mypage/reviews')
 def reviews(request:Request):
-    
     return templates.TemplateResponse(request,'review_list.html')    
-
 
 
 
