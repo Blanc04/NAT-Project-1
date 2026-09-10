@@ -22,7 +22,9 @@ window.onload = () => {
     }
    
 }
-
+/*
+긴 문자열을 가져와서, 쿠키를 분리후 이름과 값을 분리하는 로직
+*/
 function getCookieValue(key){
     cookies=document.cookie.split('; ')
     for(cookie of cookies)

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        background-color: #f7f7f7;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 800px;
+        border-collapse: collapse;
+        background-color: white;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px 16px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #ff5b3f;
+        color: white;
+    }
+
+    td {
+        color: #333;
+    }
+</style>
+</head>
+<body>
+    <h1>관리자 페이지</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>이름</th>
+                <th>id</th>
+                <th>비밀번호</th>
+                <th>전화번호</th>
+                <th>관리자 코드</th>
+            </tr>
+        </thead>
+
+    <tbody>
+  
+    <tr>
+        <td>{{member.name}}</td>
+        <td>{{member.member_id}}</td>
+        <td>{{member.member_pw}}</td>
+        <td>{{member.member_pnum}}</td>
+        <td>{{member.admin_code}}</td>
+        
+    </tr>
+
+    </tbody>
+    </table>
+
+
+</body>
+</html>
