@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/footer/footer.css">
+</head>
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>이름</th>
+                <th>비밀번호</th>
+                <th>전화번호</th>
+            
+            </tr>
+        </thead>
+
+    <tbody>
+
+    <tr>
+        <td>{{member.name}}</td>
+        <td>{{member.member_pw}}</td>
+        <td>{{member.member_pnum}}</td>
+    
+        
+    </tr>
+
+     
+    </tbody>
+    </table>
+    
+     
+    {% include 'footer.html' %}
+</body>
+</html>

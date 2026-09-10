@@ -1,16 +1,189 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!--  헤더 css적용 -->
-    <link rel="stylesheet" href="/static/css/header.css">
-</head>
-<body>
-    <!--  위에 검색창은 진자로 불러옴 -->
-     {% include 'header.html' %}
 
-    
+    <title>DISH INSIDE 게시판</title>
+
+    <link rel="stylesheet" href="/static/css/board.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer/footer.css">
+</head>
+
+<body>
+{% include 'header.html' %}
+<div class="board-container">
+
+    <!-- 게시판 상단 -->
+    <div class="board-header">
+
+        <div>
+            <h1>자유 게시판</h1>
+            <p>DISH INSIDE 회원들과 자유롭게 이야기를 나눠보세요.</p>
+        </div>
+
+        <a href="/board/write" class="write-btn">
+            글쓰기
+        </a>
+
+    </div>
+
+
+    <!-- 게시판 목록 -->
+    <div class="board-table">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th class="num">번호</th>
+                    <th class="title">제목</th>
+                    <th class="writer">작성자</th>
+                    <th class="date">작성일</th>
+                    <th class="view">조회</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                {% for post in posts %}
+
+                <tr>
+
+                    <td>
+                        {{ post.board_code }}
+                    </td>
+
+                    <td class="post-title">
+
+                        <a href="/board/detail/{{ post.board_code }}">
+                            {{ post.title }}
+                        </a>
+
+                    </td>
+
+                    <td>
+                        {{ post.member_id }}
+                    </td>
+
+                    <td>
+                        {{ post.created_at }}
+                    </td>
+
+                    <td>
+                        {{ post.views }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+
+                <!-- 게시글 없을 때 -->
+
+                {% if not posts %}
+
+                <tr>
+
+                    <td colspan="5" class="empty-board">
+
+                        등록된 게시글이 없습니다.
+
+                    </td>
+
+                </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- 게시판 아래 영역 -->
+    <div class="board-bottom">
+
+        <!-- 검색 -->
+
+        <form
+            action="/board"
+            method="get"
+            class="search-box"
+        >
+
+            <select name="type">
+
+                <option value="title">
+                    제목
+                </option>
+
+                <option value="writer">
+                    작성자
+                </option>
+
+                <option value="content">
+                    내용
+                </option>
+
+            </select>
+
+
+            <input
+                type="text"
+                name="keyword"
+                placeholder="검색어를 입력하세요"
+            >
+
+
+            <button type="submit">
+                검색
+            </button>
+
+        </form>
+
+
+        <!-- 페이지 -->
+
+        <div class="pagination">
+
+            <a href="#" class="page-arrow">
+                ‹
+            </a>
+
+            <a href="#" class="page active">
+                1
+            </a>
+
+            <a href="#" class="page">
+                2
+            </a>
+
+            <a href="#" class="page">
+                3
+            </a>
+
+            <a href="#" class="page">
+                4
+            </a>
+
+            <a href="#" class="page">
+                5
+            </a>
+
+            <a href="#" class="page-arrow">
+                ›
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'footer.html' %}
 </body>
 </html>

@@ -1,0 +1,309 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f7f7f7;
+
+    font-family:
+        Pretendard,
+        "Noto Sans KR",
+        "Malgun Gothic",
+        sans-serif;
+
+    color: #333;
+}
+
+
+/* 전체 */
+
+.write-container {
+    width: min(900px, calc(100% - 40px));
+
+    margin: 60px auto;
+
+    padding: 35px 40px;
+
+    background: #fff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+/* 상단 */
+
+.write-header {
+    padding-bottom: 22px;
+    margin-bottom: 30px;
+
+    border-bottom: 2px solid #ff5b3f;
+}
+
+.write-header h1 {
+    margin: 0 0 8px;
+
+    font-size: 28px;
+
+    color: #222;
+}
+
+.write-header p {
+    margin: 0;
+
+    color: #888;
+
+    font-size: 14px;
+}
+
+
+/* 폼 */
+
+.write-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: #444;
+}
+
+
+/* 제목 input */
+
+.form-group input {
+    width: 100%;
+
+    height: 48px;
+
+    padding: 0 15px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    background: #fff;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+.form-group input:focus {
+    border-color: #ff5b3f;
+
+    box-shadow:
+        0 0 0 3px rgba(255, 91, 63, 0.08);
+}
+
+
+/* 카테고리 */
+
+.form-group select {
+    width: 220px;
+
+    height: 48px;
+
+    padding: 0 14px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    background: #fff;
+
+    color: #444;
+
+    font-size: 14px;
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.form-group select:focus {
+    border-color: #ff5b3f;
+
+    box-shadow:
+        0 0 0 3px rgba(255, 91, 63, 0.08);
+}
+
+
+/* 내용 */
+
+.form-group textarea {
+    width: 100%;
+
+    min-height: 350px;
+
+    padding: 16px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-family: inherit;
+
+    line-height: 1.6;
+
+    outline: none;
+
+    resize: vertical;
+
+    transition: 0.2s;
+}
+
+.form-group textarea::placeholder {
+    color: #aaa;
+}
+
+.form-group textarea:focus {
+    border-color: #ff5b3f;
+
+    box-shadow:
+        0 0 0 3px rgba(255, 91, 63, 0.08);
+}
+
+
+/* 버튼 */
+
+.button-area {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding-top: 10px;
+}
+
+
+/* 취소 버튼 */
+
+.cancel-btn {
+    display: inline-flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    min-width: 90px;
+
+    height: 44px;
+
+    padding: 0 20px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    background: #fff;
+
+    color: #555;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.cancel-btn:hover {
+    background: #f5f5f5;
+
+    border-color: #ccc;
+}
+
+
+/* 등록 버튼 */
+
+.submit-btn {
+    min-width: 90px;
+
+    height: 44px;
+
+    padding: 0 20px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: #ff5b3f;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.submit-btn:hover {
+    background: #ef4c31;
+}
+
+
+/* 모바일 */
+
+@media (max-width: 700px) {
+
+    .write-container {
+        width: calc(100% - 20px);
+
+        margin: 20px auto;
+
+        padding: 25px 20px;
+    }
+
+    .write-header h1 {
+        font-size: 24px;
+    }
+
+    .form-group select {
+        width: 100%;
+    }
+
+    .form-group textarea {
+        min-height: 280px;
+    }
+
+    .button-area {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-btn,
+    .submit-btn {
+        width: 100%;
+    }
+}
+

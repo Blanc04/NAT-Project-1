@@ -1,0 +1,157 @@
+/* 전체 화면 */
+body {
+    margin: 0;
+    padding: 50px 30px;
+    background-color: #f5f6f8;
+
+    font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        "Malgun Gothic",
+        sans-serif;
+
+    color: #333;
+}
+
+
+/* 회원 목록 테이블 */
+table {
+    width: min(1100px, 95%);
+    margin: 0 auto;
+
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    background-color: #ffffff;
+
+    border: none !important;
+    border-radius: 12px;
+    overflow: hidden;
+
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* 테이블 제목 영역 */
+thead {
+    background-color: #ff5b3f;
+}
+
+
+/* 제목 셀 */
+th {
+    padding: 18px 20px;
+
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+
+    text-align: center;
+
+    border: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+
+/* 마지막 제목 오른쪽 선 제거 */
+th:last-child {
+    border-right: none;
+}
+
+
+/* 회원 데이터 */
+td {
+    padding: 17px 20px;
+
+    font-size: 14px;
+    color: #444;
+
+    text-align: center;
+
+    border: none;
+    border-bottom: 1px solid #eeeeee;
+
+    background-color: #ffffff;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+/* 마지막 회원 줄 */
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* 마우스를 올렸을 때 */
+tbody tr:hover td {
+    background-color: #fff5f2;
+}
+
+
+/* 이름 */
+td:nth-child(1) {
+    font-weight: 700;
+    color: #222;
+}
+
+
+/* 아이디 */
+td:nth-child(2) {
+    color: #555;
+}
+
+
+/* 비밀번호 */
+td:nth-child(3) {
+    color: #777;
+}
+
+
+/* 전화번호 */
+td:nth-child(4) {
+    letter-spacing: 0.3px;
+}
+
+
+/* 관리자 코드 */
+td:nth-child(5) {
+    font-weight: 700;
+    color: #ff5b3f;
+}
+
+
+/* 줄무늬 효과 */
+tbody tr:nth-child(even) td {
+    background-color: #fafafa;
+}
+
+
+/* 줄무늬 행도 hover 적용 */
+tbody tr:nth-child(even):hover td {
+    background-color: #fff5f2;
+}
+
+
+/* 모바일 */
+@media (max-width: 768px) {
+
+    body {
+        padding: 25px 10px;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 750px;
+        min-width: 750px;
+    }
+
+    th,
+    td {
+        padding: 14px 12px;
+        font-size: 13px;
+    }
+}
