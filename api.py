@@ -1,3 +1,5 @@
+from starlette.middleware.sessions import SessionMiddleware
+
 from fastapi import Request, Form
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
@@ -14,11 +16,22 @@ from DTO.ReviewDTO import Review
 from DTO.MemberDTO import Member
 
 
+
 # =========================================================
 # FastAPI 기본 설정
 # =========================================================
 
 app = FastAPI()
+
+app.add_middleware(
+    SessionMiddleware,
+    secret_key='Human123#'
+) 
+
+EXCLUDE_PATH = [
+    '/login'
+   
+]
 
 templates = Jinja2Templates(directory='templates/')
 
@@ -94,19 +107,75 @@ def search(request: Request):
 # 로그인 처리
 # 현재는 ID / PW 비교 로직 구현 전
 # =========================================================
+# 암호화 처리가 되어있으므로 사용
+def verify(orig, hashed):
+    return ctx_pw.verify(orig, hashed)
 
 @app.post('/api/login')
-def _login():
-    try:
-        pass
-
-    except Exception as e:
-        print('로그인 처리 에러:', e)
-
+def _login(
+   request:Request,
+   member_id:str=Form(),
+   member_pw:str=Form(),
+   session: Session = Depends(get_session)   
+):
+   
+       
+    sql=text('''
+             select *
+             from member
+             where member_id=:member_id
+             
+             ''')
+    # 세션에 id에 대한 정보를 담고
+    
+    result=session.exec(
+               sql,
+               params={
+                   'member_id':member_id,
+                   
+               }
+           )
+    
+    member=result.mappings().fetchone()
+    
+    #  아이디 검증
+    if member is None:
+          return RedirectResponse(
+                url='/login',
+                status_code=303
+            )
+    # 비밀번호 검증
+    
+    if not verify(member_pw,member['member_pw']):
+            return RedirectResponse(
+                        url='/login',
+                        status_code=303
+                    )
+    
+    request.session['member_id']=member['member_id']
+   
+    
     return RedirectResponse(
-        url='/dsinside',
-        status_code=303
-    )
+           url='/dsinside',
+           status_code=303
+       )
+   
+
+       
+       
+    
+    
+     
+    # try:
+    #     pass
+
+    # except Exception as e:
+    #     print('로그인 처리 에러:', e)
+
+    # return RedirectResponse(
+    #     url='/dsinside',
+    #     status_code=303
+    # )
 
 
 # =========================================================
@@ -262,8 +331,10 @@ def _signup(
                 :member_pnum
             )
         ''')
-
-        session.exec(
+        
+        
+        # 비번은 암호화해서 들어감
+        result=session.exec(
             sql,
             params={
                 'name': member.name,
@@ -272,13 +343,23 @@ def _signup(
                 'member_pnum': member.member_pnum
             }
         )
+        
+        # result라는 변수에 가입 정보를 담아줌
+        
+        users=result.mappings().fetchone()
+        
+        # 중복방지검사
+        
     except Exception as e:
+        
         print('회원가입 에러:', e)
 
     return RedirectResponse(
         url='/login',
         status_code=303
     )
+    
+   
 
 
 # =========================================================
@@ -479,4 +560,4 @@ if __name__ == '__main__':
         port=8000,
         reload=True,
         host='0.0.0.0'
-    )
+    )  
